@@ -11,7 +11,8 @@ import { duplicateMarqueeList } from '$utils/marquee-list';
 window.Webflow = window.Webflow || [];
 window.Webflow?.push(() => {
   setTimeout(() => {
-    window.WF_IX = Webflow.require('ix3');
+    const wf = window.Webflow as any;
+    window.WF_IX = wf.require('ix3');
     console.debug('Webflow IX3 globalised:', window.WF_IX);
   }, 100);
 
@@ -26,10 +27,15 @@ window.Webflow?.push(() => {
 
   loadScrollTimelineCSSPolyfill();
   loadVideoPlayer();
+  loadTimeline();
 });
 
 function loadVideoPlayer() {
-  window.conditionalLoadScript('[data-video-el="vimeo"]', 'components/inline-video-player.js');
+  window.conditionalLoadScript('[data-video-el="container"]', 'components/inline-video-player.js');
+}
+
+function loadTimeline() {
+  window.conditionalLoadScript('.section_timeline', 'components/timeline.js');
 }
 
 function initComponents() {
